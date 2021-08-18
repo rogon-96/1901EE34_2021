@@ -11,7 +11,6 @@ def meraki_helper(n):
     print("Yes-{} is a Meraki number".format(n))
     return 1
 
-
 input_list = [12, 14, 56, 78, 98, 54, 678, 134,789, 0, 7, 5, 123, 45, 76345, 987654321]
 count = 0
 for item in input_list:
