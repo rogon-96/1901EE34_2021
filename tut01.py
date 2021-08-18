@@ -15,5 +15,4 @@ input_list = [12, 14, 56, 78, 98, 54, 678, 134,789, 0, 7, 5, 123, 45, 76345, 987
 count = 0
 for item in input_list:
     count += meraki_helper(item)        # calling function for every number in list
-print("The input_list contains {} meraki numbers and {} non meraki numbers".format(
-    count, len(input_list)-count))
+print("The input_list contains {} meraki numbers and {} non meraki numbers".format(count, len(input_list)-count))
