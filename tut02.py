@@ -6,8 +6,8 @@ def get_memory_score(input_nums):
         return 
     list1 = []
     score=0
-    for num in input_nums :
-        if num in list1 :
+    for num in input_nums:
+        if num in list1:
             score+=1
         else:
             list1.append(num)
