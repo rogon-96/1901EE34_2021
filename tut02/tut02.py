@@ -17,5 +17,6 @@ def get_memory_score(input_nums):
     return 
 
 input_nums = [7, 5, 8, 6, 3, 5, 9, 7, 9, 7, 5, 6, 4, 1, 7, 4, 6, 5, 8, 9, 4, 8, 3, 0, 3]
+
 get_memory_score(input_nums)
 
