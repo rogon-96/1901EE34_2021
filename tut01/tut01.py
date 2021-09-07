@@ -1,7 +1,7 @@
 def meraki_helper(n):
     prev = n % 10
     num = n//10
-    while(num):                                 # checking until the number is greater than 0
+    while(num):                                  # checking until the number is greater than 0
         r = num % 10
         if(abs(r-prev) != 1):
             print("No-{} is Not a Meraki number".format(n))
