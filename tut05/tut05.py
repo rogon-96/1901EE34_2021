@@ -15,6 +15,25 @@ def sheet_isexist(sheet_name,wb):
             return 1
     return 0
 
+def get_credits_spi(wb,credit_map):
+    Spi,Credits= [],[]
+    for sheet in wb.sheetnames[1:]:
+        ws = wb[sheet]
+        credits = [int(cell.value) for cell in ws["E"][1:]]
+        spi = [credit_map[cell.value.strip().strip("*")] for cell in ws["G"][1:]]
+        Credits.append(sum(credits))
+        Spi.append(round(sum([spi[i]*credits[i] for i in range(len(spi))])/sum(credits),2))
+    return Spi,Credits
+
+def get_results(Spi,ws,Credits):        
+    ws.append(["Semester No"]+[x for x in range(1,9)])
+    ws.append(["Semester wise Credit taken"]+Credits)
+    ws.append(["SPI"]+Spi)
+    prefix_credits = [sum(Credits[:i+1]) for i in range(len(Credits))]
+    ws.append(["Total Credits taken"]+prefix_credits)
+    CPI_num=[Spi[i]*Credits[i] for i in range(len(Credits))] 
+    ws.append(["CPI"]+[round(sum(CPI_num[:i+1])/prefix_credits[i],2) for i in range(len(Spi))])
+    return
 def generate_marksheet():
     dir_name =  "output"
     if not os.path.exists(dir_name):
@@ -51,6 +70,23 @@ def generate_marksheet():
         subname,ltp,crd = course_dict[f"{SubCode}"][0],course_dict[f"{SubCode}"][1],course_dict[f"{SubCode}"][2]
         ws.append([ws.max_row,SubCode,subname,ltp,crd,Sub_Type,Grade])
         wb.save(r'output\\{}.xlsx'.format(Roll))          
-        c+=1;        
+        c+=1;       
+    credit_map = {'AA':10,'AB':9,'BB':8,'BC':7,'CC':6,'CD':5,'DD':4,'F':0,'I':0,
+                'AA*':10,'AB*':9,'BB*':8,'BC*':7,'CC*':6,'CD*':5,'DD*':4,'F*':0,'I*':0}
+    names_data = open("names-roll.csv","r")
+    names_csv = csv.reader(names_data)
+    names_list = [list(record) for record in names_csv][1:] 
+    for record in names_list:
+        name,Roll = record[1],record[0]
+        wb = load_workbook(r'output\\{}.xlsx'.format(Roll))
+        ws =wb.active
+        ws.column_dimensions["A"].width = 30
+        ws.append(["RollNo",Roll])
+        ws.append(["Name of Student",name])
+        ws.append(["Discipline",Roll[4:6]])
+        Spi,Credits= get_credits_spi(wb,credit_map)
+        get_results(Spi,ws,Credits)
+        print(Spi)
+        wb.save(r'output\\{}.xlsx'.format(Roll)) 
     return
 generate_marksheet()
