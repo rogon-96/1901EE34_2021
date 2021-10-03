@@ -1,3 +1,4 @@
+# RollNo : 1901EE34 . The code will be finished in a minute.So please wait for 1 min....
 import os
 from openpyxl import Workbook
 from openpyxl import load_workbook
@@ -49,6 +50,7 @@ def calculate_overallpage(wb,record,credit_map):
 
 def generate_marksheet():
     #checking if the directory exists
+    print("Please wait for 1 min")
     dir_name =  "output"
     if not os.path.exists(dir_name):
         os.mkdir(dir_name)
@@ -112,12 +114,13 @@ def generate_marksheet():
         subname,ltp,crd = course_dict[f"{SubCode}"][1:]   
 
         ws.append([ws.max_row,SubCode,subname,ltp,crd,Sub_Type,Grade]) # appending appropriate row in approriate sem sheet
-        print(f"Iterating {i+1} row")   
+        # print(f"Iterating {i+1} row")   
 
         if i+1==len(grades_list) or record[0]!=record1[0] :
             calculate_overallpage(wb,names_list[c],credit_map)  #filling overall page
-            print(f"Calculating {c} student's result")
+            # print(f"Calculating {c} student's result")
             wb.save(r'output\\{}.xlsx'.format(Roll))         #saving after complete operations are done in rollNo.xlsx 
             c+=1;    
+    print("Completed")
     return
 generate_marksheet()
