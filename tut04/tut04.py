@@ -10,8 +10,7 @@ def output_by_subject():
         os.mkdir(dir_name)
     data = open("regtable_old.csv", "r")
     data_csv=csv.reader(data)
-    data_list = [list(record) for record in data_csv][1:]
-    for record in data_list:
+    for record in data_csv:
         rollno,register_sem,schedule_sem,subno,grade1,date_of_entry1,grade2,date_of_entry2,sub_type = record
         refined_list = [rollno,register_sem,subno,sub_type]
         sub_no='{}.xlsx'.format(subno)
@@ -41,7 +40,7 @@ def output_individual_roll():
         refined_list = [rollno,register_sem,subno,sub_type]
         roll_no='{}.xlsx'.format(rollno)
         file_path='./output_individual_roll/'+roll_no
-        if(os.path.isfile(file_path)): #adding data to sheet
+        if(os.path.isfile(file_path)):
             workbook=load_workbook(r'output_individual_roll\\{}.xlsx'.format(rollno))
             sheet=workbook.active
             sheet.append(refined_list)
