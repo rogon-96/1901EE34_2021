@@ -10,12 +10,6 @@ def create_workbook(record): #creating workbook
     wb.save(f'output\\{record[0]}.xlsx')
     return wb
 
-def sheet_isexist(sheet_name,wb): #checking if a sheet exists
-    for sheet in wb.sheetnames:
-        if sheet == sheet_name:
-            return 1
-    return 0
-
 def get_credits_spi(wb,credit_map): #getting spi and credit details
     Spi,Credits= [],[]
     for sheet in wb.sheetnames[1:]:
@@ -85,21 +79,22 @@ def generate_marksheet():
     
     #iterating through grades.csv
     c=1
-    wb = 0
+    wb =0
     for i in range(len(grades_list)):
         record = grades_list[i]
-    
         if i+1 != len(grades_list):         #checking if it is the last roww
             record1 = grades_list[i+1]
-    
+
         Roll,Sem_no, = record[0],record[1]
 
         file_path='./output/'+'{}.xlsx'.format(Roll)
 
         if not os.path.isfile(file_path):   #checking if the {rollNo}.xlsx exists in output folder
             wb = create_workbook(record)    #function call for creating a workbook
-        
-        if not sheet_isexist(f'Sem{Sem_no}',wb): #checking if the sheet exists in {rollNo}.xlsx by calling sheet_isexist func
+        elif wb==0 :
+            print("You are attempting to run the code second time which appends the same so plz delete the contents of output folder and run the code ")
+            return 
+        if f'Sem{int(Sem_no)}' not in wb.sheetnames: #checking if the sheet exists in {rollNo}.xlsx
             wb.create_sheet(f'Sem{Sem_no}',int(Sem_no))
             ws = wb[f"Sem{int(Sem_no)}"]
             ws.column_dimensions["C"].width = max_length      
