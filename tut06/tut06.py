@@ -16,6 +16,7 @@ def regex_renamer():
 	os.makedirs(corrected_srt,exist_ok = True)
 	corr_dir = os.path.join(corrected_srt,Series[webseries_num-1])
 	if os.path.exists(corr_dir):
+		print("Already Renamed")
 		return 
 	os.makedirs(corr_dir,exist_ok = True)
 	wrong_srt = os.path.join(os.getcwd(),"wrong_srt")
@@ -28,11 +29,8 @@ def regex_renamer():
 			episode = int(file_name[x+4:x+6])
 			x1 = "{:0{}d}".format(season,season_padding)
 			x2 = "{:0{}d}".format(episode,episode_padding)
-			final_name = f"{Series[webseries_num-1]} - Season {x1} Episode {x2} -"
-			if re.search(".mp4",file_name):
-				final_name+=".mp4"
-			else:
-				final_name+=".srt"
+			final_name = f"{Series[webseries_num-1]} - Season {x1} Episode {x2}."
+			final_name+=file_name.split(".")[-1].strip()
 			os.chdir(corr_dir)
 			with open(final_name,'w') as file:
 				shutil.copy(os.path.join(wrong_dir,file_name),os.path.join(corr_dir,final_name))
@@ -53,4 +51,3 @@ def regex_renamer():
 		print(final_name)	
 	return   
 regex_renamer()
-
