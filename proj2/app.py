@@ -70,9 +70,11 @@ def create_range():
     if check_roll(start_roll) or check_roll(end_roll):
         bool_dict['create_range'] = 'Invalid Input'
         return redirect(url_for('index'))
-    elif not check_files():
+    if not check_files():
         bool_dict['create_range'] = "plz upload the files some files are missing"
-        return redirect(url_for('index'))      
+        return redirect(url_for('index'))  
+    start_roll = start_roll.upper()
+    end_roll = end_roll.upper()    
     nr = pd.read_csv('./sample_input/names-roll.csv')
     sm = pd.read_csv('./sample_input/subjects_master.csv')
     names_data = open("./sample_input/grades.csv","r")
