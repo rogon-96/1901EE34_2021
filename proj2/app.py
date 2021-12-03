@@ -23,7 +23,7 @@ def handle_file_save(FileObject,req_resp_name):
      
 
 def check_roll(rollno):
-    pattern = re.compile(r'\d\d\d\d\w\w\d\d') 
+    pattern = re.compile(r'\d\d\d\d[a-zA-Z][a-zA-Z]\d\d') 
     check = re.search(pattern,rollno)
     if check == None:
         return True
@@ -60,6 +60,9 @@ def upload_files():
 def create_range():
     bool_dict['create_range'],bool_dict['missing_nums'] = '',[]
     os.makedirs(sample_output_path,exist_ok = True)
+    if not check_files():
+        bool_dict['create_range'] = "plz upload the files some files are missing"
+        return redirect(url_for('index')) 
     range_str = request.form['range']
     try:
         start_roll,end_roll = range_str.split('-')
@@ -70,9 +73,6 @@ def create_range():
     if check_roll(start_roll) or check_roll(end_roll):
         bool_dict['create_range'] = 'Invalid Input'
         return redirect(url_for('index'))
-    if not check_files():
-        bool_dict['create_range'] = "plz upload the files some files are missing"
-        return redirect(url_for('index'))  
     start_roll = start_roll.upper()
     end_roll = end_roll.upper()    
     nr = pd.read_csv('./sample_input/names-roll.csv')
@@ -92,7 +92,7 @@ def create_all():
     bool_dict['create_range'],bool_dict['missing_nums'] = '',[]
     os.makedirs(sample_output_path,exist_ok = True)
     if not check_files():
-        bool_dict['create_range'] = "plz upload the files some files are missing"
+        bool_dict['create_all'] = "plz upload the files some files are missing"
         return redirect(url_for('index')) 
     nr = pd.read_csv('./sample_input/names-roll.csv')
     sm = pd.read_csv('./sample_input/subjects_master.csv')

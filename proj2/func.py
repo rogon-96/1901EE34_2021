@@ -148,7 +148,7 @@ def generate_transcripts(nr,sm,names_list,start_roll='',end_roll=''):
             count+=1
 
         generate_footer_layout(mth,pdf)
-        pdf.output('./transcriptsIITP/{}.pdf'.format(roll))
+        pdf.output('./transcriptsIITP/{}.pdf'.format(roll.upper()))
     return missing_nums
 
 # generate_transcripts(nr,sm,names_list,start_roll='0601CS01',end_roll='0601CS28')
