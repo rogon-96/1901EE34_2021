@@ -48,12 +48,15 @@ def generate_cpi_credits(x,y,w,pdf,spi,cpi,total_credits):
 
 
 def generate_footer_layout(mth,pdf):
+    monthDict={1:'Jan', 2:'Feb', 3:'Mar', 4:'Apr', 5:'May', 6:'Jun', 7:'Jul', 8:'Aug', 9:'Sep', 10:'Oct', 11:'Nov', 12:'Dec'}
     pdf.rect(10,mth,390,0)
     pdf.set_xy(19.8,mth+(287-mth)/2)
     pdf.cell(15,7,"Date of Issue")
     pdf.rect(pdf.get_x()+5,pdf.get_y()+5,30,0)
     pdf.set_xy(pdf.get_x()+5,pdf.get_y())
-    pdf.cell(15,7,str(date.today()))
+    pdf.cell(3,7,str(date.today().day))
+    pdf.cell(5,7,monthDict[date.today().month])
+    pdf.cell(3,7,str(date.today().year))
     if os.path.exists('./sample_input/seal.png'):
         pdf.image('./sample_input/seal.png' ,pdf.get_x()+150,mth+10,50,50)
     pdf.rect(350,pdf.get_y(),30,0)
@@ -65,13 +68,14 @@ def generate_footer_layout(mth,pdf):
 
 def generate_data(nr,sm,names_list):   
     nr_dict = {}
-    for i in range(len(nr)): nr_dict[nr.at[i,"Roll"]] = nr.at[i,"Name"]
+    for i in range(len(nr)): nr_dict[nr.at[i,"Roll"].upper()] = nr.at[i,"Name"]
     sm_dict = {}
     for i in range(len(sm)): 
         sm_dict[sm.at[i,"subno"]] = [sm.at[i,"subno"],sm.at[i,"subname"],sm.at[i,"ltp"],sm.at[i,"crd"]]   
     table_dict = {}
     for row in names_list:
         rollno,semno,subcode,credit,grade,Sub_Type = row
+        rollno = rollno.upper()
         st_list = sm_dict[f"{subcode}"].copy()
         grade = str(grade)
         st_list.append(grade)
@@ -82,7 +86,7 @@ def generate_data(nr,sm,names_list):
 
 def generate_rollno_list(nr,start_roll,end_roll):
     nr_dict,missing_nums,existing_nums={},[],[]
-    for i in range(len(nr)): nr_dict[nr.at[i,"Roll"]] = nr.at[i,"Name"]
+    for i in range(len(nr)): nr_dict[nr.at[i,"Roll"].upper()] = nr.at[i,"Name"]
     start_roll_no,end_roll_no = int(start_roll[6:]),int(end_roll[6:])
     if start_roll_no>end_roll_no : start_roll_no,end_roll_no = end_roll_no,start_roll_no
     st = start_roll[:6]
@@ -107,7 +111,7 @@ def generate_transcripts(nr,sm,names_list,start_roll='',end_roll=''):
     for index,row in nr.iterrows():
         pdf = FPDF("L" , "mm" ,"A3")
         pdf.add_page()
-        roll,name,cpi= row["Roll"],row["Name"],0
+        roll,name,cpi= row["Roll"].upper(),row["Name"],0
         generate_header_layout(pdf,roll,name,2000+int(roll[0:2]),'Btech',courses[roll[4:6]])
         pdf.set_font("Times", size=8)
         col_width_list = [15,70,13,10,10]
