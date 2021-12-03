@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{%block title%}
+   Transcript Generator
+{%endblock%}
+
+{%block body%}
+    <div class="App">
+        <h1>Transcript Generator</h1>
+        <fieldset>
+        <form action="upload_files" method="post" enctype="multipart/form-data">
+            <label for="grades">Select grades.csv file:</label>
+            <hr>
+            <input type="file" id="grades" name = "grades"><br><br>
+            <label for="names-roll">Select names-rollno.csv file: </label>
+            <hr>
+            <input type="file" id="names-roll" name = "names-roll"><br><br>
+            <label for="subjects_master">Select Subjects_master file: </label>
+            <hr>
+            <input type="file" id="subjects_master" name = "subjects_master"><br><br>
+            <button type="submit" class="Upload">Upload</button>
+            {{data['upload_files']}}
+        </form>
+        <form action="seal" method="post" enctype="multipart/form-data">
+            <label for="seal">Select seal file</label><hr>
+            <input type="file" id="seal" name = "seal">
+            <button type="submit" class="Upload">Upload</button>
+            {{data['seal']}}
+            <br><br>
+        </form>
+        <form action="signature" method="post" enctype="multipart/form-data">
+            <label for="signature">Select signature file</label><hr>
+            <input type="file" id="signature" name ="signature">
+            <button type="submit" class="Upload">Upload</button>
+            {{data['signature']}}
+            <br><br>
+        </form>
+        <form action="create_range" method="post" >     
+            <label for="range">Give a range of RollNos</label><hr>
+            <input type="text" id="range" name = "range">
+            <button class="Upload" type="submit">Create Transcripts</button>       
+            {{data['create_range']}}
+            <br><br>
+        </form>
+        <form action="create_all" method="post">
+            <button class="Upload" type="submit">Generate all Transcripts</button> <hr>     
+            {{data['create_all']}}
+            <br><br>
+        </form>
+        <div class="missing_nums">
+            {%if data['missing_nums'] %}
+                <h2>Missing Numbers are :</h2>
+                {%for missing_item in data['missing_nums']%}
+                    <p>{{missing_item}}</p>
+                {%endfor%}
+            {%endif%}
+        </div>
+    </fieldset>
+    <br>
+    </div>
+{%endblock%}
