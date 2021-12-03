@@ -1,0 +1,52 @@
+.App{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width:500px;
+    margin-left: 35%;
+    border-radius: 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    justify-content: space-between;
+    border: 2px solid black;
+}
+body {
+    background-color: hsla(89, 43%, 51%, 0.3);
+}
+.Upload{
+
+    background: none;
+    border: none;
+    color:white;
+    background-color:#6f42c1;
+    font-size: small;
+    padding:0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+/* .generate_rollno{
+    margin-left: 18%;
+} */
+.generate{
+    width: 100%;
+    background: none;
+    border: none;
+    color:white;
+    background-color: black; 
+    font-size: small;
+    padding:0.5rem;
+    width: 100%;
+    cursor: pointer;  
+    border-radius: 0.5rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+#positive,#negative{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
